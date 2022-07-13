@@ -15,7 +15,7 @@ export const createNewUser = async (req, res) => {
 					const passwordHashed = await bcrypt.hash(password, 10);
 					if (email === ADMIN1) {
 						try {
-							const user = await UsersDB.create({
+							await UsersDB.create({
 								email,
 								password: passwordHashed,
 								full_name,
@@ -25,14 +25,14 @@ export const createNewUser = async (req, res) => {
 							});
 							res.json({
 								isCreated: true,
-								data: user,
+								message: `your user was created, now you need to confirm your email.`,
 							});
 						} catch (err) {
 							res.send(err);
 						}
 					} else {
 						try {
-							const user = await UsersDB.create({
+							await UsersDB.create({
 								email,
 								password: passwordHashed,
 								full_name,
@@ -41,7 +41,7 @@ export const createNewUser = async (req, res) => {
 							});
 							res.json({
 								isCreated: true,
-								data: user,
+								message: `your user was created, now you need to confirm your email. Please go to your email and click the link below`,
 							});
 						} catch (err) {
 							res.send(err);
