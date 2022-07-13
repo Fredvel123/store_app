@@ -17,7 +17,7 @@ export const sendEmailToConfirmEmail = (user_email, key_email) => {
 	const mailOptions = {
 		from: SERVER_EMAIL,
 		to: user_email,
-		subject: 'DENTAL COMPANY - EMAIL CONFIRM',
+		subject: 'DEV - EMAIL CONFIRM',
 		text: `To confirm your email please click here: http://localhost:8000/api/users/confirmemail/${key_email}`,
 	};
 

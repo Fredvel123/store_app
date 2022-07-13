@@ -1,8 +1,9 @@
 import { Router } from 'express';
 const router = Router();
 // controllers
-import { getAllUsers } from '../controllers/users.ctl.js';
+import { confirmEmail, getAllUsers } from '../controllers/users.ctl.js';
 
 router.get('/all', getAllUsers);
+router.get('/confirmemail/:key', confirmEmail);
 
 export default router;
