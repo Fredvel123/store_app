@@ -1,7 +1,8 @@
 import UsersDB from '../models/user.model.js';
 import { keyRandom } from '../helpers/key.random.js';
-import { ADMIN1 } from '../../../configs/var.env.js';
+import { ADMIN1, JWT_KEY } from '../../../configs/var.env.js';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 // Sign Up
 export const createNewUser = async (req, res) => {
@@ -69,6 +70,34 @@ export const createNewUser = async (req, res) => {
 		res.json({
 			isCreated: false,
 			message: `email: ${userExists.email}, is already used`,
+		});
+	}
+};
+
+// Sign up
+export const registerUsers = async (req, res) => {
+	const { password, email } = req.body;
+	const user = await UsersDB.findOne({ where: { email } });
+	if (user) {
+		const matchPassword = await bcrypt.compare(password, user.password);
+		if (matchPassword) {
+			const token = jwt.sign({ id: user.id }, JWT_KEY, {
+				expiresIn: 60 * 60 * 24 * 14,
+			});
+			res.json({
+				auth: true,
+				token,
+			});
+		} else {
+			res.json({
+				auth: false,
+				message: 'your password is not correct',
+			});
+		}
+	} else {
+		res.json({
+			auth: false,
+			message: `your email, ${email} is not register`,
 		});
 	}
 };

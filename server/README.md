@@ -18,3 +18,44 @@ const getAllUsers = async () => {
 	return response;
 };
 ```
+
+## Create New User
+
+```js
+const createNewUser = async () => {
+	const url = 'http://example.com/api/auth/signup';
+	const request = await fetch(url, {
+		method: 'POST',
+		headers: {
+			'Content-type': 'application/json',
+		},
+		body: JSON.stringify({
+			email: 'user@email.com',
+			password: 'userpassword',
+			full_name: 'Jhon Doe',
+		}),
+	});
+	const response = await request.json();
+	return response;
+};
+```
+
+## Register User
+
+```js
+const registerUser = async () => {
+	const url = 'http://example.com/api/auth/signin';
+	const request = await fetch(url, {
+		method: 'POST',
+		headers: {
+			'Content-type': 'application/json',
+		},
+		body: JSON.stringify({
+			email: 'user@email.com',
+			password: 'userpassword',
+		}),
+	});
+	const response = await request.json();
+	return response;
+};
+```
