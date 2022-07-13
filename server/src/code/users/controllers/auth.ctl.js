@@ -19,6 +19,7 @@ export const createNewUser = async (req, res) => {
 								email,
 								password: passwordHashed,
 								full_name,
+								email_confirmed: true,
 								key_email: keyRandom(12), // random string
 								rool: 'admin',
 							});
@@ -74,20 +75,27 @@ export const createNewUser = async (req, res) => {
 	}
 };
 
-// Sign up
+// Sign in
 export const registerUsers = async (req, res) => {
 	const { password, email } = req.body;
 	const user = await UsersDB.findOne({ where: { email } });
 	if (user) {
 		const matchPassword = await bcrypt.compare(password, user.password);
 		if (matchPassword) {
-			const token = jwt.sign({ id: user.id }, JWT_KEY, {
-				expiresIn: 60 * 60 * 24 * 14,
-			});
-			res.json({
-				auth: true,
-				token,
-			});
+			if (user.email_confirmed) {
+				const token = jwt.sign({ id: user.id }, JWT_KEY, {
+					expiresIn: 60 * 60 * 24 * 14,
+				});
+				res.json({
+					auth: true,
+					token,
+				});
+			} else {
+				res.json({
+					auth: false,
+					message: 'You need to confirm your email to Sign In',
+				});
+			}
 		} else {
 			res.json({
 				auth: false,
