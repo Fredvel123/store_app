@@ -20,4 +20,8 @@ app.get('/', (req, res) =>
 	})
 );
 
+// router -- users
+import userRouters from './code/users/routers/users.routers.js';
+app.use('/api/users', userRouters);
+
 export default app;
