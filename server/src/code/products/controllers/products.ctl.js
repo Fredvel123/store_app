@@ -22,7 +22,8 @@ export const createNewProduct = async (req, res) => {
 	} else {
 		res.json({
 			productCreated: false,
-			message: "You can't create products, because you're only user",
+			message:
+				"You can't create products, only admins can create products",
 		});
 	}
 };
