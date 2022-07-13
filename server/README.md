@@ -4,4 +4,4 @@
 
 <img src="./src/assets/db_diagram.png" />
 
-<a href="./src/assets/store_app_diagram.pdf">PDF design</a>
+More details: <a href="./src/assets/store_app_diagram.pdf">PDF design</a>
