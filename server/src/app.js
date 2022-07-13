@@ -26,5 +26,8 @@ app.use('/api/users', userRouters);
 // router -- auth
 import authRouters from './code/users/routers/auth.routers.js';
 app.use('/api/auth', authRouters);
+// router -- products
+import productsRouters from './code/products/routers/products.routers.js';
+app.use('/api/products', productsRouters);
 
 export default app;

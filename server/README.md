@@ -59,3 +59,16 @@ const registerUser = async () => {
 	return response;
 };
 ```
+
+# Products
+
+## Get all products
+
+```js
+const getAllProducts = async () => {
+	const url = 'http://localhost:8000/api/products/all';
+	const request = await fetch(url); // method GET
+	const response = await request.json();
+	return response;
+};
+```

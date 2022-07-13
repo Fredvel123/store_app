@@ -10,3 +10,14 @@ CREATE TABLE IF NOT EXISTS users (
   gender BOOLEAN DEFAULT null,
   profession TEXT DEFAULT null
 );
+
+CREATE TABLE IF NOT EXISTS products (
+  id SERIAL PRIMARY KEY,
+  title TEXT,
+  description TEXT,
+  price INT,
+  pic TEXT,
+  pic_id TEXT,
+  author INT,
+  FOREIGN KEY (author) REFERENCES users(id) 
+);
