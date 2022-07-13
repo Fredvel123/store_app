@@ -1,15 +1,12 @@
 import { Sequelize } from 'sequelize';
 // env var
-import { PASSWORd, USERNAME, DATABASE } from '../configs/var.env.js';
+import { PASSWORd, USERNAME, DATABASE, HOST } from '../configs/var.env.js';
 
 const sequelize = new Sequelize({
 	username: USERNAME,
 	database: DATABASE,
 	password: PASSWORd,
-	// username: 'postgres',
-	// database: 'store_app',
-	// password: 'freddy',
-	host: 'localhost',
+	host: HOST,
 	dialect: 'postgres',
 	logging: false,
 });

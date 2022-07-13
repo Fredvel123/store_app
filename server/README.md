@@ -5,3 +5,16 @@
 <img src="./src/assets/db_diagram.png" />
 
 More details: <a href="./src/assets/store_app_diagram.pdf">PDF design</a>
+
+# End Pints
+
+## Get All Users
+
+```js
+const getAllUsers = async () => {
+	const url = 'http://example.com/api/users/all';
+	const request = await fetch(url); // method: GET
+	const response = await request.json();
+	return response;
+};
+```

@@ -23,5 +23,8 @@ app.get('/', (req, res) =>
 // router -- users
 import userRouters from './code/users/routers/users.routers.js';
 app.use('/api/users', userRouters);
+// router -- auth
+import authRouters from './code/users/routers/auth.routers.js';
+app.use('/api/auth', authRouters);
 
 export default app;
