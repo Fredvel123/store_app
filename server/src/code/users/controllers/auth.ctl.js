@@ -26,7 +26,7 @@ export const createNewUser = async (req, res) => {
 							});
 							res.json({
 								isCreated: true,
-								message: `your user was created, now you need to confirm your email.`,
+								message: `your user was created`,
 							});
 						} catch (err) {
 							res.send(err);

@@ -1,5 +1,5 @@
 import ProductsDB from '../models/products.models.js';
-// import UsersDB from '../../users/models/user.model.js';
+import UsersDB from '../../users/models/user.model.js';
 
 export const getAllProducts = async (req, res) => {
 	const products = await ProductsDB.findAll();
@@ -9,5 +9,20 @@ export const getAllProducts = async (req, res) => {
 		});
 	} else {
 		res.json(products);
+	}
+};
+
+export const createNewProduct = async (req, res) => {
+	const id = req.id;
+	const { price, title, description, pic } = req.body;
+	const user = await UsersDB.findOne({ where: { id } });
+
+	if (user.rool === 'admin') {
+		res.send('product created');
+	} else {
+		res.json({
+			productCreated: false,
+			message: "You can't create products, because you're only user",
+		});
 	}
 };
