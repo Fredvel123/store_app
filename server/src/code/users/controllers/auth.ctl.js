@@ -3,6 +3,7 @@ import { keyRandom } from '../helpers/key.random.js';
 import { ADMIN1, JWT_KEY } from '../../../configs/var.env.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { sendEmailToConfirmEmail } from '../helpers/nodemailer.js';
 
 // Sign Up
 export const createNewUser = async (req, res) => {
@@ -32,13 +33,14 @@ export const createNewUser = async (req, res) => {
 						}
 					} else {
 						try {
-							await UsersDB.create({
+							const user = await UsersDB.create({
 								email,
 								password: passwordHashed,
 								full_name,
 								key_email: keyRandom(12), // random string
 								rool: 'user',
 							});
+							sendEmailToConfirmEmail(user.email, user.key_email);
 							res.json({
 								isCreated: true,
 								message: `your user was created, now you need to confirm your email. Please go to your email and click the link below`,
