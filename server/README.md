@@ -73,10 +73,10 @@ const getAllProducts = async () => {
 };
 ```
 
-## Get all products
+## Create products
 
 ```js
-const getAllProducts = async () => {
+const createNewProduct = async () => {
 	// to upload images it is advisable to use AXIOS
 	const url = 'http://localhost:8000/api/products/create';
 	const request = await fetch(url, {
