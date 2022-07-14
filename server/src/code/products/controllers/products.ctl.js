@@ -165,14 +165,52 @@ export const addFavoriteProducts = async (req, res) => {
 	const id = req.id;
 	const product = await ProductsDB.findOne({ where: { id: id_product } });
 	const user = await UsersDB.findOne({ where: { id } });
-	const newFavoriteProduct = await FavoriteDB.create({
-		product_id: product.id,
-		author: user.id,
+	const favoriteAdded = await FavoriteDB.findOne({
+		where: { author: id, product_id: id_product },
 	});
-	res.json({
-		favoriteCreated: true,
-		data: newFavoriteProduct,
+	if (product) {
+		if (!favoriteAdded) {
+			const newFavoriteProduct = await FavoriteDB.create({
+				product_id: product.id,
+				author: user.id,
+			});
+			res.json({
+				favoriteCreated: true,
+				data: newFavoriteProduct,
+			});
+		} else {
+			res.json({
+				message: `You already added product with id: ${id_product} before`,
+			});
+		}
+	} else {
+		res.json({ message: `product with id: ${id_product} doesn't exists` });
+	}
+};
+
+export const removeFavoriteProduct = async (req, res) => {
+	const id = req.id;
+	const { id_product } = req.params;
+	const productsByUser = await FavoriteDB.findOne({
+		where: { author: id, product_id: id_product },
 	});
+	if (productsByUser) {
+		try {
+			await FavoriteDB.destroy({
+				where: { author: id, product_id: id_product },
+			});
+			res.json({
+				favoriteRemoved: true,
+				message: `Product with id: ${id_product} removed`,
+			});
+		} catch (err) {
+			res.json(err);
+		}
+	} else {
+		res.json({
+			message: `product with id: ${id_product}, doesn't exists`,
+		});
+	}
 };
 
 export const getAllFavoriteProducts = async (req, res) => {
