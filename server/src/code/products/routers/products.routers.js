@@ -3,6 +3,7 @@ const router = Router();
 // controllers
 import {
 	createNewProduct,
+	dropProduct,
 	getAllProducts,
 } from '../controllers/products.ctl.js';
 // middlewares
@@ -16,5 +17,6 @@ router.post(
 	upload.single('product_pic'),
 	createNewProduct
 );
+router.delete('/drop/:id_product', verifyJwt, dropProduct);
 
 export default router;

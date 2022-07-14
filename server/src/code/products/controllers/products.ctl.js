@@ -122,3 +122,38 @@ export const createNewProduct = async (req, res) => {
 		});
 	}
 };
+
+export const dropProduct = async (req, res) => {
+	const { id_product } = req.params;
+	const product = await ProductsDB.findOne({ where: { id: id_product } });
+	const id = req.id;
+	const user = await UsersDB.findOne({ where: { id } });
+	if (user.rool === 'admin') {
+		if (product) {
+			try {
+				await cloudinary.v2.uploader.destroy(product.pic_id);
+				console.log('image removed from cloudinary');
+				try {
+					await ProductsDB.destroy({ where: { id } });
+					res.json({
+						dropped: true,
+						data_id: id,
+					});
+				} catch (err) {
+					res.send(err);
+				}
+			} catch (err) {
+				res.send(err);
+			}
+		} else {
+			res.json({
+				dropped: false,
+				meessage: `Product with id: ${id_product}, doesn't exist`,
+			});
+		}
+	} else {
+		res.json({
+			message: 'Only admins can remove productsd',
+		});
+	}
+};
