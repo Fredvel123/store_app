@@ -13,3 +13,7 @@ export const SERVER_PSSWD = process.env.SERVER_PSSWD; // server email
 export const SERVER_EMAIL = process.env.SERVER_EMAIL; // server passowrd email
 
 export const JWT_KEY = process.env.JWT_SECRET_KEY;
+
+export const CLOUD_NAME = process.env.CLOUD_NAME;
+export const CLOUD_KEY = process.env.CLOUD_KEY;
+export const CLOUD_SECRET_KEY = process.env.CLOUD_SECRET_KEY;
