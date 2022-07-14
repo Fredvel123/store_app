@@ -97,3 +97,20 @@ const createNewProduct = async () => {
 	return response;
 };
 ```
+
+## Delete products
+
+```js
+const createNewProduct = async () => {
+	// only admins can drop products
+	const url = `http://localhost:8000/api/products/drop/${id_product}`;
+	const request = await fetch(url, {
+		method: 'DELETE',
+		headers: {
+			token: 'your token',
+		},
+	});
+	const response = await request.json();
+	return response;
+};
+```
