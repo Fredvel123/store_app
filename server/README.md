@@ -72,3 +72,28 @@ const getAllProducts = async () => {
 	return response;
 };
 ```
+
+## Get all products
+
+```js
+const getAllProducts = async () => {
+	// to upload images it is advisable to use AXIOS
+	const url = 'http://localhost:8000/api/products/create';
+	const request = await fetch(url, {
+		method: 'POST',
+		headers: {
+			'Content-type': 'application/json',
+            'Content-type': "multipart/form-data",// to be able to upload files
+            'token': "your token"
+		},
+		body: JSON.stringify({
+			title: 'user@email.com',
+			description: 'userpassword',
+			price: 'userpassword',
+			product_pic: //your image,
+		}),
+	});
+	const response = await request.json();
+	return response;
+};
+```
