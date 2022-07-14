@@ -8,7 +8,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const storage = multer.diskStorage({
 	destination: path.join(__dirname, '../images'),
 	filename: (req, file, cb) => {
-		cb(null, Date.now() + path.extname(file.originalname));
+		cb(null, Date.now() + '-' + file.originalname);
 	},
 });
 

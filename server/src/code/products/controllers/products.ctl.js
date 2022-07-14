@@ -1,5 +1,7 @@
 import ProductsDB from '../models/products.models.js';
 import UsersDB from '../../users/models/user.model.js';
+// compress images';
+import sharp from 'sharp';
 
 export const getAllProducts = async (req, res) => {
 	const products = await ProductsDB.findAll();
@@ -18,7 +20,28 @@ export const createNewProduct = async (req, res) => {
 	const user = await UsersDB.findOne({ where: { id } });
 
 	if (user.rool === 'admin') {
-		res.send(req.file);
+		if (req.file.size < 2100000) {
+			res.send(req.file);
+		} else {
+			sharp(req.file.path)
+				.resize()
+				.jpeg({
+					quality: 90,
+					// chromaSubsampling: '4:4:4',
+				})
+				.toFile(
+					`./src/code/products/compressed/${
+						Date.now() + req.file.originalname
+					}`,
+					(err, info) => {
+						if (err) {
+							res.send(err);
+						} else {
+							res.send(info);
+						}
+					}
+				);
+		}
 	} else {
 		res.json({
 			productCreated: false,
