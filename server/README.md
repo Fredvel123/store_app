@@ -147,3 +147,19 @@ const getFavoriteProductsByUser = async () => {
 	return response;
 };
 ```
+
+## Remove Favorite products
+
+```js
+const removeProductsByProductId = async () => {
+	const url = `http://localhost:8000/api/products/favorites/remove/${id_product}`;
+	const request = await fetch(url, {
+		method: 'DELETE',
+		headers: {
+			token: 'your token',
+		},
+	});
+	const response = await request.json();
+	return response;
+};
+```
