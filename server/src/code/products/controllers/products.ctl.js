@@ -18,7 +18,7 @@ export const createNewProduct = async (req, res) => {
 	const user = await UsersDB.findOne({ where: { id } });
 
 	if (user.rool === 'admin') {
-		res.send('product created');
+		res.send(req.file);
 	} else {
 		res.json({
 			productCreated: false,
