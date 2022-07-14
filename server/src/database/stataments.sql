@@ -21,3 +21,10 @@ CREATE TABLE IF NOT EXISTS products (
   author INT,
   FOREIGN KEY (author) REFERENCES users(id) 
 );
+
+CREATE TABLE IF NOT EXISTS favorite_products (
+    product_id INT,
+    author INT,
+    FOREIGN KEY (author) REFERENCES users(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);

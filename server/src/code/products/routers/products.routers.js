@@ -2,8 +2,10 @@ import { Router } from 'express';
 const router = Router();
 // controllers
 import {
+	addFavoriteProducts,
 	createNewProduct,
 	dropProduct,
+	getAllFavoriteProducts,
 	getAllProducts,
 } from '../controllers/products.ctl.js';
 // middlewares
@@ -18,5 +20,7 @@ router.post(
 	createNewProduct
 );
 router.delete('/drop/:id_product', verifyJwt, dropProduct);
+router.get('/favorites', verifyJwt, getAllFavoriteProducts);
+router.get('/favorites/add/:id_product', verifyJwt, addFavoriteProducts);
 
 export default router;

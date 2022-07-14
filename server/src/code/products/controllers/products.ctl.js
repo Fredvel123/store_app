@@ -1,6 +1,7 @@
 // data from database
 import ProductsDB from '../models/products.models.js';
 import UsersDB from '../../users/models/user.model.js';
+import FavoriteDB from '../models/favorite.model.js';
 // compress images';
 import sharp from 'sharp';
 // cloudinary
@@ -155,5 +156,43 @@ export const dropProduct = async (req, res) => {
 		res.json({
 			message: 'Only admins can remove productsd',
 		});
+	}
+};
+
+// code to added products to favorites
+export const addFavoriteProducts = async (req, res) => {
+	const { id_product } = req.params;
+	const id = req.id;
+	const product = await ProductsDB.findOne({ where: { id: id_product } });
+	const user = await UsersDB.findOne({ where: { id } });
+	const newFavoriteProduct = await FavoriteDB.create({
+		product_id: product.id,
+		author: user.id,
+	});
+	res.json({
+		favoriteCreated: true,
+		data: newFavoriteProduct,
+	});
+};
+
+export const getAllFavoriteProducts = async (req, res) => {
+	const id = req.id;
+	const favoriteProducts = await FavoriteDB.findAll({
+		where: { author: id },
+	});
+	if (favoriteProducts < 1) {
+		res.json({
+			message: `User with id: ${id}, doesn't have any favorite product`,
+		});
+	} else {
+		let products = [];
+		for (let i = 0; i < favoriteProducts.length; i++) {
+			const element = favoriteProducts[i];
+			const items = await ProductsDB.findOne({
+				where: { id: element.dataValues.product_id },
+			});
+			products.push(items);
+		}
+		res.json(products);
 	}
 };
