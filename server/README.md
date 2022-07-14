@@ -119,7 +119,7 @@ const createNewProduct = async () => {
 
 ```js
 const addFavoriteProduct = async () => {
-	// only admins can drop products
+	// all users can add favorite products
 	const url = `http://localhost:8000/api/products/favorites/add/${id_product}`;
 	const request = await fetch(url, {
 		method: 'GET',
@@ -136,7 +136,6 @@ const addFavoriteProduct = async () => {
 
 ```js
 const getFavoriteProductsByUser = async () => {
-	// only admins can drop products
 	const url = `http://localhost:8000/api/products/favorites`;
 	const request = await fetch(url, {
 		method: 'GET',
