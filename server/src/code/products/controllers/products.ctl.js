@@ -19,6 +19,8 @@ import {
 // path
 import { __dirname } from '../middlewares/product.images.js';
 import path from 'path';
+// fs
+import fs from 'fs-extra';
 
 // get all products
 export const getAllProducts = async (req, res) => {
@@ -52,6 +54,11 @@ export const createNewProduct = async (req, res) => {
 					author: user.id,
 				});
 				res.json({ productCreated: true, data: productCreated });
+				// original image
+				fs.remove(req.file.path, (err) => {
+					if (err) res.send(err);
+					console.log(`original Image removed: ${req.file.path}`);
+				});
 			} catch (err) {
 				res.send(err);
 			}
@@ -74,7 +81,36 @@ export const createNewProduct = async (req, res) => {
 							await cloudinary.v2.uploader.upload(
 								pathImageCompressed
 							);
-						res.send(imageUploaded);
+						try {
+							const productCreated = await ProductsDB.create({
+								title,
+								description,
+								price,
+								pic: imageUploaded.secure_url,
+								pic_id: imageUploaded.public_id,
+								author: user.id,
+							});
+							res.json({
+								productCreated: true,
+								data: productCreated,
+							});
+							// image compressed
+							fs.remove(pathImageCompressed, (err) => {
+								if (err) res.send(err);
+								console.log(
+									`image compressed removed: ${pathImageCompressed}`
+								);
+							});
+							// original image
+							fs.remove(req.file.path, (err) => {
+								if (err) res.send(err);
+								console.log(
+									`original image removed: ${req.file.path} `
+								);
+							});
+						} catch (err) {
+							res.send(err);
+						}
 					}
 				});
 		}
