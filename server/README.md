@@ -60,6 +60,49 @@ const registerUser = async () => {
 };
 ```
 
+## Edit User Info
+
+```js
+const editUser = async () => {
+	const url = 'http://example.com/api/users/edit';
+	const request = await fetch(url, {
+		method: 'PATCH',
+		headers: {
+			'Content-type': 'application/json',
+            token: 'your token'
+		},
+		body: JSON.stringify({
+        	phone: '',
+		    full_name: '',
+		    profession: ",
+		    gender: true || false;
+        }),
+	});
+	const response = await request.json();
+	return response;
+};
+```
+
+## Remove User
+
+```js
+const removeUser = async () => {
+	const url = 'http://example.com/api/users/remove';
+	const request = await fetch(url, {
+		method: 'DELETE',
+		headers: {
+			'Content-type': 'application/json',
+			token: 'your token',
+		},
+		body: JSON.stringify({
+			password: 'user password',
+		}),
+	});
+	const response = await request.json();
+	return response;
+};
+```
+
 # Products
 
 ## Get all products
