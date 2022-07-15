@@ -2,11 +2,15 @@
 
 ## Install
 
+If you have installed "bash" you can use this.
+
 To install the whole project, you can just type:
 
 ```bash
 ./install.sh
 ```
+
+If this command doesn't work, just install the project by yourself
 
 ## Requeriments
 
