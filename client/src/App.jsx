@@ -1,6 +1,6 @@
 // import { getAllProducts } from './configs/endpoints';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Signup from './components/Signin';
+import Signup from './components/SignUp';
 
 export default function App() {
 	return (

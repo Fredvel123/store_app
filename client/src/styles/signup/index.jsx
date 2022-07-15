@@ -4,7 +4,7 @@ import { colors, fonts } from '../tools';
 import { LeftOutlined } from '@ant-design/icons';
 
 export const SignInStyles = styled.div`
-	background: ${colors.Blue_Gray};
+	background: ${colors.Dark_Blue};
 	font-family: ${fonts.extra};
 	width: 80%;
 	margin: 0 10%;
@@ -17,9 +17,21 @@ export const SignInStyles = styled.div`
 			margin-left: 1.5%;
 		}
 	}
+	form {
+		button {
+			margin: auto;
+		}
+	}
 `;
 
 export const IconLeft = styled(LeftOutlined)`
 	cursor: pointer;
-	font-size: 50px;
+	font-size: 40px;
+	color: ${colors.Blue_Gray};
+`;
+
+export const InputStyled = styled.div`
+	input {
+		width: 100%;
+	}
 `;
