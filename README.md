@@ -19,7 +19,7 @@ To install the whole project, you can just type:
 
 If this command doesn't work, just install the project by yourself
 
-## Requeriments
+## About the project
 
 1. Admin can create new products
 
