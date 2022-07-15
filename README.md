@@ -2,6 +2,13 @@
 
 ## Install
 
+Clone the repository:
+
+```bash
+git clone https://github.com/Fredvel123/store_app.git
+cd store_app
+```
+
 If you have installed "bash" you can use this.
 
 To install the whole project, you can just type:
