@@ -19,6 +19,11 @@ To install the whole project, you can just type:
 
 If this command doesn't work, just install the project by yourself
 
+After all, don't forget add your own info in ".env" file (enviroment variables)
+if you don't do it, problably project will not work
+
+Also, install your POSTGRESQL database
+
 ## About the project
 
 1. Admin can create new products
