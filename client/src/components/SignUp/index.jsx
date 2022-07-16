@@ -90,10 +90,7 @@ export default function Signup() {
 						<IconLeft color={theme ? lightTheme : darkTheme} />
 					</Link>
 					<h2>Sign Up</h2>
-					<img
-						src="https://github.com/Fredvel123/todo_app/blob/master/src/assets/images/icon-moon.svg"
-						alt=""
-					/>
+					<ThemeButton />
 				</div>
 				<form onSubmit={handlerSubmit}>
 					<Inputs
@@ -131,7 +128,6 @@ export default function Signup() {
 					<Button text="Sign Up" />
 				</form>
 				<p>{response.message}</p>
-				<ThemeButton />
 			</div>
 		</SignInStyles>
 	);

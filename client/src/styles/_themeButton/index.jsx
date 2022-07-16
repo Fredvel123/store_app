@@ -27,4 +27,14 @@ export const ThemeButtonStyled = styled.div`
 		background: ${({ state }) =>
 			state ? lightTheme.third : darkTheme.third};
 	}
+	@media screen and (max-width: 700px) {
+		border: 2px solid
+			${({ state }) => (state ? lightTheme.third : darkTheme.third)};
+		width: 50px;
+		height: 25px;
+		.switch {
+			width: 22px;
+			height: 22px;
+		}
+	}
 `;

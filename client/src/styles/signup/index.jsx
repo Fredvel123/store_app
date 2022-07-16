@@ -34,6 +34,7 @@ export const SignInStyles = styled.div`
 				letter-spacing: 1px;
 				margin-left: 1.5%;
 				color: ${({ color }) => color.titles};
+				margin-right: 5%;
 			}
 		}
 		form {
@@ -56,6 +57,15 @@ export const SignInStyles = styled.div`
 				margin-bottom: 2vh;
 			}
 		}
+		.header {
+			padding-top: 3vh;
+			h2 {
+				letter-spacing: 1px;
+				margin-left: 1.5%;
+				font-size: 20px;
+				color: ${({ color }) => color.titles};
+			}
+		}
 	}
 `;
 
@@ -63,4 +73,7 @@ export const IconLeft = styled(LeftOutlined)`
 	cursor: pointer;
 	font-size: 40px;
 	color: ${({ color }) => color.titles};
+	@media screen and (max-width: 700px) {
+		font-size: 30px;
+	}
 `;
