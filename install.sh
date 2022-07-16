@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # installing project with yarn
-echo "What do you prefer? just type yarn or npm"
+echo "What's your favorite package manager? just type yarn or npm"
+
 read npm_package 
 if [ $npm_package == 'yarn' ] || [ $npm_package == 'npm' ]
 then 
