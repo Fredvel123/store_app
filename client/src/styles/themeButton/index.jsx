@@ -6,8 +6,8 @@ export const ThemeButtonStyled = styled.div`
 	/* background: #c1c1c1; */
 	border: 4px solid
 		${({ state }) => (state ? lightTheme.third : darkTheme.third)};
-	width: 80px;
-	height: 45px;
+	width: 60px;
+	height: 35px;
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
@@ -19,11 +19,11 @@ export const ThemeButtonStyled = styled.div`
 	.switch {
 		position: absolute;
 		transition: all 0.3s;
-		margin-left: ${({ state }) => (state ? '35px' : '-35px')};
+		margin-left: ${({ state }) => (state ? '24px' : '-24px')};
 		/* margin-right: 35px; */
 		border-radius: 25px;
-		width: 35px;
-		height: 35px;
+		width: 25px;
+		height: 25px;
 		background: ${({ state }) =>
 			state ? lightTheme.third : darkTheme.third};
 	}
