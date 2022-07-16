@@ -5,3 +5,8 @@
 	text-decoration: none;
 	list-style: none;
 }
+
+body {
+	background: #eaeaea;
+	font-family: 'Albert Sans', sans-serif;
+}
