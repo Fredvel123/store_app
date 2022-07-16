@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 // styles css
-import Inputs from './Inputs';
+import Inputs from '../_Inputs';
 // styled components
 import { IconLeft, SignInStyles } from '../../styles/signup';
 // react router
@@ -14,7 +14,8 @@ import wallpaper from '../../assets/register.svg';
 // theme and colors
 import { darkTheme, lightTheme, fonts } from '../../styles/tools';
 import { useSelector } from 'react-redux';
-import ThemeButton from '../ThemeButton';
+import ThemeButton from '../_ThemeButton';
+import Button from '../_Button';
 
 export default function Signup() {
 	// to change the page title
@@ -31,7 +32,7 @@ export default function Signup() {
 		value: '',
 		isValid: null,
 	});
-	const [response, setResponse] = useState('');
+	const [response, setResponse] = useState({ message: '' });
 	const passwordMatch = () => {
 		if (password.value === repeatPasswd.value) {
 			setRepeatPasswd({ ...repeatPasswd, isValid: true });
@@ -54,20 +55,28 @@ export default function Signup() {
 		});
 		const res = await sendInfo.json();
 		setResponse(res);
-		console.log(res);
 	};
 
 	const handlerSubmit = (e) => {
 		e.preventDefault();
 		passwordMatch();
-		if (
-			password.isValid &
-			name.isValid &
-			email.isValid &
-			repeatPasswd.isValid
-		) {
-			createNewUser();
+		if (!name.isValid) {
+			setResponse({
+				message:
+					'Add a valid name without special characters or numbers',
+			});
+			return;
 		}
+		if (!repeatPasswd.isValid) {
+			setResponse({ message: 'Make sure about your password' });
+			return;
+		}
+
+		if (!email.isValid) {
+			setResponse({ message: 'Add a valid password' });
+			return;
+		}
+		createNewUser();
 	};
 	return (
 		<SignInStyles color={theme ? lightTheme : darkTheme} fonts={fonts}>
@@ -78,10 +87,9 @@ export default function Signup() {
 			<div className="register">
 				<div className="header">
 					<Link to="/">
-						<IconLeft />
+						<IconLeft color={theme ? lightTheme : darkTheme} />
 					</Link>
 					<h2>Sign Up</h2>
-					<ThemeButton />
 					<img
 						src="https://github.com/Fredvel123/todo_app/blob/master/src/assets/images/icon-moon.svg"
 						alt=""
@@ -89,35 +97,41 @@ export default function Signup() {
 				</div>
 				<form onSubmit={handlerSubmit}>
 					<Inputs
-						type="email"
-						placeh="email"
+						type="Email"
+						placeh="Enter your email here"
 						state={email}
 						setState={setEmail}
 						expression={regExp.email}
+						label="Email"
 					/>
 					<Inputs
 						type="text"
-						placeh="full name"
+						label="Name"
+						placeh="Enter your full name"
 						state={name}
 						setState={setName}
 						expression={regExp.name}
 					/>
 					<Inputs
 						type="password"
-						placeh="password"
+						label="Password"
+						placeh="Please enter a secure password"
 						state={password}
 						setState={setPassword}
 						expression={regExp.password}
 					/>
 					<Inputs
 						type="password"
+						label="Password"
 						placeh="repeat your password"
 						state={repeatPasswd}
 						setState={setRepeatPasswd}
 						validationPassword={passwordMatch}
 					/>
-					<button>Sign Up</button>
+					<Button text="Sign Up" />
 				</form>
+				<p>{response.message}</p>
+				<ThemeButton />
 			</div>
 		</SignInStyles>
 	);

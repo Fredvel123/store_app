@@ -1,6 +1,6 @@
 import React from 'react';
 // components
-import ThemeButton from '../ThemeButton';
+import ThemeButton from '../_ThemeButton';
 
 function SignIn() {
 	return <ThemeButton />;

@@ -1,6 +1,6 @@
 import React from 'react';
 // styled components1
-import { ThemeButtonStyled } from '../../styles/themeButton';
+import { ThemeButtonStyled } from '../../styles/_themeButton';
 // icpns
 import sunIcon from '../../assets/sun.png';
 import moonIcon from '../../assets/moon.png';

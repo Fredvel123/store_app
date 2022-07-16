@@ -16,6 +16,7 @@ export default function App() {
 		if (data !== null) {
 			dispatch(setTheme(data));
 		}
+		// eslint-disable-next-line
 	}, []);
 	useEffect(() => {
 		localStorage.setItem('theme', JSON.stringify(theme));

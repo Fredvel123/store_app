@@ -1,5 +1,8 @@
 import React from 'react';
-import { InputStyled } from '../../styles/signup';
+import { InputStyled } from '../../styles/_inputs';
+// color
+import { darkTheme, lightTheme, fonts } from '../../styles/tools';
+import { useSelector } from 'react-redux';
 
 function Inputs({
 	type,
@@ -8,7 +11,9 @@ function Inputs({
 	state,
 	expression,
 	validationPassword,
+	label,
 }) {
+	const theme = useSelector((state) => state.theme.value);
 	const handlerChange = (e) => {
 		setState({ ...state, value: e.target.value });
 	};
@@ -25,13 +30,16 @@ function Inputs({
 		}
 	};
 	return (
-		<InputStyled>
+		<InputStyled color={theme ? lightTheme : darkTheme} font={fonts}>
+			<label htmlFor={type}> {label} </label>
 			<input
+				id={type}
 				type={type}
 				onChange={handlerChange}
 				placeholder={placeh}
 				onKeyUp={validations}
 				onBlur={validations}
+				required
 			/>
 		</InputStyled>
 	);
