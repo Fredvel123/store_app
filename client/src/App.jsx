@@ -7,6 +7,8 @@ import { setTheme } from './redux/slices/theme';
 import { setAuth } from './redux/slices/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import SignIn from './components/SignIn';
+import Home from './components/Home';
+import DeniedHome from './components/DeniedPage';
 
 export default function App() {
 	const theme = useSelector((state) => state.theme.value);
@@ -42,6 +44,10 @@ export default function App() {
 			<Routes>
 				<Route path="/signup" element={<Signup />} />
 				<Route path="/signin" element={<SignIn />} />
+				<Route
+					path="/home"
+					element={auth.auth ? <Home /> : <DeniedHome />}
+				/>
 			</Routes>
 		</BrowserRouter>
 	);

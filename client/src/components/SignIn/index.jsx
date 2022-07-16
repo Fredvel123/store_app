@@ -62,6 +62,7 @@ function SignIn() {
 	};
 	useEffect(() => {
 		navigateToHome();
+		// eslint-disable-next-line
 	}, [handlerSubmit]);
 
 	return (
