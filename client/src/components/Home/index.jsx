@@ -1,23 +1,31 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { getAllUsers } from '../../configs/endpoints';
+import { userRole } from '../../configs/endpoints';
+import { useSelector } from 'react-redux';
 
 function Home() {
-	const [users, setUsers] = useState([]);
-	const getUsers = async () => {
-		const users = await fetch(getAllUsers);
-		const res = await users.json();
+	const auth = useSelector((state) => state.auth.value);
+
+	const [users, setUsers] = useState('');
+	const getUserRole = async () => {
+		const role = await fetch(userRole, {
+			method: 'GET',
+			headers: {
+				token: auth.token,
+			},
+		});
+		const res = await role.json();
 		setUsers(res);
 	};
 	useEffect(() => {
-		getUsers();
+		document.title = 'Home';
+		getUserRole();
 	}, []);
 
 	return (
 		<div>
-			{users.length > 0
-				? users.map((item) => <h2>{item.full_name}</h2>)
-				: null}
+			{/* <h2>{users}</h2> */}
+			<button onClick={() => console.log(users)}>info</button>
 		</div>
 	);
 }
