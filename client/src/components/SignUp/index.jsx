@@ -92,6 +92,10 @@ export default function Signup() {
 					<h2>Sign Up</h2>
 					<ThemeButton />
 				</div>
+				<div className="advice">
+					<h3>You already have an account?</h3>
+					<Link to="/signin">Sign In</Link>
+				</div>
 				<form onSubmit={handlerSubmit}>
 					<Inputs
 						type="Email"

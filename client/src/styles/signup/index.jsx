@@ -45,7 +45,23 @@ export const SignInStyles = styled.div`
 			color: ${({ color }) => color.texts};
 			font-size: 15px;
 		}
+		.advice {
+			margin-top: 4vh;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			h3 {
+				color: ${({ color }) => color.titles};
+				font-size: 15px;
+			}
+			a {
+				font-size: 20px;
+				font-weight: 200;
+				color: ${({ color }) => color.info};
+			}
+		}
 	}
+
 	@media screen and (max-width: 700px) {
 		grid-template-columns: 100%;
 		height: auto;
@@ -64,6 +80,20 @@ export const SignInStyles = styled.div`
 				margin-left: 1.5%;
 				font-size: 20px;
 				color: ${({ color }) => color.titles};
+			}
+		}
+	}
+	@media screen and (max-width: 500px) {
+		.register {
+			.advice {
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+				a {
+					margin-top: 2vh;
+					font-size: 16px;
+					margin-bottom: 3vh;
+				}
 			}
 		}
 	}

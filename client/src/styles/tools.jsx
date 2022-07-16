@@ -15,7 +15,7 @@ export const lightTheme = {
 	primary: '#EAEAEA',
 	secondary: '#FFFFFF',
 	third: '#4558BE',
-	info: '#009688',
+	info: '#0830c4',
 	hover: '#EF4F4C',
 	titles: '#000000',
 	texts: '#212529',
