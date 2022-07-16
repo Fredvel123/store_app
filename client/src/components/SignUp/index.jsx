@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react';
-// styles css
-import Inputs from '../_Inputs';
 // styled components
 import { IconLeft, SignInStyles } from '../../styles/signup';
 // react router
@@ -13,7 +11,10 @@ import { createUser } from '../../configs/endpoints';
 import wallpaper from '../../assets/register.svg';
 // theme and colors
 import { darkTheme, lightTheme, fonts } from '../../styles/tools';
+// redux
 import { useSelector } from 'react-redux';
+// components
+import Inputs from '../_Inputs';
 import ThemeButton from '../_ThemeButton';
 import Button from '../_Button';
 
