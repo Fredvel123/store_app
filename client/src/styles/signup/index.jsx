@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import { colors, fonts } from '../tools';
+import { darkTheme, fonts } from '../tools';
 // icons
 import { LeftOutlined } from '@ant-design/icons';
 
 export const SignInStyles = styled.div`
-	background: ${colors.Dark_Blue};
+	background: ${darkTheme.secondary};
 	font-family: ${fonts.extra};
 	width: 80%;
 	margin: 0 10%;
@@ -27,7 +27,7 @@ export const SignInStyles = styled.div`
 export const IconLeft = styled(LeftOutlined)`
 	cursor: pointer;
 	font-size: 40px;
-	color: ${colors.Blue_Gray};
+	color: ${darkTheme.titles};
 `;
 
 export const InputStyled = styled.div`

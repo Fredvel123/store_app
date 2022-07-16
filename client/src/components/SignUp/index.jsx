@@ -6,7 +6,9 @@ import { IconLeft, SignInStyles } from '../../styles/signup';
 // react router
 import { Link } from 'react-router-dom';
 // regular expressions
-import regExp from '../../configs/reg.exp';
+import { regExp } from '../../configs/reg.exp';
+import { createUser } from '../../configs/endpoints';
+// endpoints
 
 export default function Signup() {
 	// to change the page title
@@ -21,6 +23,7 @@ export default function Signup() {
 		value: '',
 		isValid: null,
 	});
+	const [response, setResponse] = useState('');
 	const passwordMatch = () => {
 		if (password.value === repeatPasswd.value) {
 			setRepeatPasswd({ ...repeatPasswd, isValid: true });
@@ -29,13 +32,34 @@ export default function Signup() {
 		}
 	};
 
+	const createNewUser = async () => {
+		const sendInfo = await fetch(createUser, {
+			method: 'POST',
+			headers: {
+				'Content-type': 'application/json',
+			},
+			body: JSON.stringify({
+				email: email.value,
+				password: password.value,
+				full_name: name.value,
+			}),
+		});
+		const res = await sendInfo.json();
+		setResponse(res);
+		console.log(res);
+	};
+
 	const handlerSubmit = (e) => {
 		e.preventDefault();
 		passwordMatch();
-		console.log(name);
-		console.log(email);
-		console.log(password);
-		console.log(repeatPasswd);
+		if (
+			password.isValid &
+			name.isValid &
+			email.isValid &
+			repeatPasswd.isValid
+		) {
+			createNewUser();
+		}
 	};
 	return (
 		<SignInStyles>
@@ -76,6 +100,7 @@ export default function Signup() {
 				/>
 				<button>Sign Up</button>
 			</form>
+			<button onClick={() => console.log(response)}>info</button>
 		</SignInStyles>
 	);
 }
