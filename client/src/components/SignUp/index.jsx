@@ -7,14 +7,22 @@ import { IconLeft, SignInStyles } from '../../styles/signup';
 import { Link } from 'react-router-dom';
 // regular expressions
 import { regExp } from '../../configs/reg.exp';
-import { createUser } from '../../configs/endpoints';
 // endpoints
+import { createUser } from '../../configs/endpoints';
+// images
+import wallpaper from '../../assets/register.svg';
+// theme and colors
+import { darkTheme, lightTheme, fonts } from '../../styles/tools';
+import { useSelector } from 'react-redux';
+import ThemeButton from '../ThemeButton';
 
 export default function Signup() {
 	// to change the page title
 	useEffect(() => {
 		document.title = 'Store app - Sign Up';
 	}, []);
+	// theme
+	const theme = useSelector((state) => state.theme.value);
 	// states
 	const [name, setName] = useState({ value: '', isValid: null });
 	const [email, setEmail] = useState({ value: '', isValid: null });
@@ -62,45 +70,55 @@ export default function Signup() {
 		}
 	};
 	return (
-		<SignInStyles>
-			<div className="header">
-				<Link to="/">
-					<IconLeft />
-				</Link>
-				<h2>Sign Up</h2>
+		<SignInStyles color={theme ? lightTheme : darkTheme} fonts={fonts}>
+			<div className="wallpaper">
+				<img src={wallpaper} alt="wallpaper" />
+				<h2>Store App</h2>
 			</div>
-			<form onSubmit={handlerSubmit}>
-				<Inputs
-					type="email"
-					placeh="email"
-					state={email}
-					setState={setEmail}
-					expression={regExp.email}
-				/>
-				<Inputs
-					type="text"
-					placeh="full name"
-					state={name}
-					setState={setName}
-					expression={regExp.name}
-				/>
-				<Inputs
-					type="password"
-					placeh="password"
-					state={password}
-					setState={setPassword}
-					expression={regExp.password}
-				/>
-				<Inputs
-					type="password"
-					placeh="repeat your password"
-					state={repeatPasswd}
-					setState={setRepeatPasswd}
-					validationPassword={passwordMatch}
-				/>
-				<button>Sign Up</button>
-			</form>
-			<button onClick={() => console.log(response)}>info</button>
+			<div className="register">
+				<div className="header">
+					<Link to="/">
+						<IconLeft />
+					</Link>
+					<h2>Sign Up</h2>
+					<ThemeButton />
+					<img
+						src="https://github.com/Fredvel123/todo_app/blob/master/src/assets/images/icon-moon.svg"
+						alt=""
+					/>
+				</div>
+				<form onSubmit={handlerSubmit}>
+					<Inputs
+						type="email"
+						placeh="email"
+						state={email}
+						setState={setEmail}
+						expression={regExp.email}
+					/>
+					<Inputs
+						type="text"
+						placeh="full name"
+						state={name}
+						setState={setName}
+						expression={regExp.name}
+					/>
+					<Inputs
+						type="password"
+						placeh="password"
+						state={password}
+						setState={setPassword}
+						expression={regExp.password}
+					/>
+					<Inputs
+						type="password"
+						placeh="repeat your password"
+						state={repeatPasswd}
+						setState={setRepeatPasswd}
+						validationPassword={passwordMatch}
+					/>
+					<button>Sign Up</button>
+				</form>
+			</div>
 		</SignInStyles>
 	);
 }

@@ -6,7 +6,7 @@ export const darkTheme = {
 	hover: '#1557FE',
 	titles: '#FFFFFF',
 	text: '#898B92',
-	button: '#A22560',
+	button: '#EF4F4C',
 	gray: '#4C5D73',
 	error: '#25A12A',
 };
