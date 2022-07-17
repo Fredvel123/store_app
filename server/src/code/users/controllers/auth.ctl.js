@@ -5,75 +5,76 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { sendEmailToConfirmEmail } from '../helpers/nodemailer.js';
 
-// Sign Up
+// Sign Up refactored
 export const createNewUser = async (req, res) => {
 	const { password, email, full_name } = req.body;
 	const userExists = await UsersDB.findOne({ where: { email } });
-	if (!userExists) {
-		if (email.length >= 1) {
-			if (full_name.length >= 5 && full_name.length <= 65) {
-				if (password.length >= 5 && password.length <= 25) {
-					const passwordHashed = await bcrypt.hash(password, 10);
-					if (email === ADMIN1) {
-						try {
-							await UsersDB.create({
-								email,
-								password: passwordHashed,
-								full_name,
-								email_confirmed: true,
-								key_email: keyRandom(12), // random string
-								role: 'admin',
-							});
-							res.json({
-								isCreated: true,
-								message: `your user was created`,
-							});
-						} catch (err) {
-							res.send(err);
-						}
-					} else {
-						try {
-							const user = await UsersDB.create({
-								email,
-								password: passwordHashed,
-								full_name,
-								key_email: keyRandom(12), // random string
-								role: 'user',
-							});
-							sendEmailToConfirmEmail(user.email, user.key_email);
-							res.json({
-								isCreated: true,
-								message: `your user was created, now you need to confirm your email. Please go to your email and click the link below`,
-							});
-						} catch (err) {
-							res.send(err);
-						}
-					}
-				} else {
-					res.json({
-						isCreated: false,
-						message:
-							'your password must be greater than 4 and less than 26 characters',
-					});
-				}
-			} else {
-				res.json({
-					isCreated: false,
-					message:
-						'you name must be greater than 4 and less than 66 characters',
-				});
-			}
-		} else {
-			res.json({
-				isCreated: false,
-				message: 'please add an email',
-			});
-		}
-	} else {
+	if (userExists) {
 		res.json({
 			isCreated: false,
-			message: `email: ${userExists.email}, is already used`,
+			message: `email: ${userExists.email}, is already used, please enter another valid email`,
 		});
+	} else if (!email.length >= 1) {
+		res.json({
+			isCreated: false,
+			message: 'please add an email',
+		});
+	} else if (!(full_name.length >= 5)) {
+		res.json({
+			isCreated: false,
+			message: 'you name must be greater than 4 characters',
+		});
+	} else if (!(full_name.length <= 65)) {
+		res.json({
+			isCreated: false,
+			message: 'you name must be less than 65 characters',
+		});
+	} else if (!(password.length >= 5)) {
+		res.json({
+			isCreated: false,
+			message: 'your password must be greater than 4 characters',
+		});
+	} else if (!(password.length <= 25)) {
+		res.json({
+			isCreated: false,
+			message: 'your password must be less than 26 characters',
+		});
+	} else if (email !== ADMIN1) {
+		const passwordHashed = await bcrypt.hash(password, 10);
+		try {
+			const user = await UsersDB.create({
+				email,
+				password: passwordHashed,
+				full_name,
+				key_email: keyRandom(12), // random string
+				role: 'client',
+			});
+			sendEmailToConfirmEmail(user.email, user.key_email);
+			res.json({
+				isCreated: true,
+				message: `your user was created, now you need to confirm your email. Please go to your email and click the link below`,
+			});
+		} catch (err) {
+			res.send(err);
+		}
+	} else {
+		try {
+			const passwordHashed = await bcrypt.hash(password, 10);
+			await UsersDB.create({
+				email,
+				password: passwordHashed,
+				full_name,
+				email_confirmed: true,
+				key_email: keyRandom(12), // random string
+				role: 'admin',
+			});
+			res.json({
+				isCreated: true,
+				message: `your user was created`,
+			});
+		} catch (err) {
+			res.send(err);
+		}
 	}
 };
 
