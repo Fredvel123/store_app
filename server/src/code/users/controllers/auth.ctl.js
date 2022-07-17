@@ -22,7 +22,7 @@ export const createNewUser = async (req, res) => {
 								full_name,
 								email_confirmed: true,
 								key_email: keyRandom(12), // random string
-								rool: 'admin',
+								role: 'admin',
 							});
 							res.json({
 								isCreated: true,
@@ -38,7 +38,7 @@ export const createNewUser = async (req, res) => {
 								password: passwordHashed,
 								full_name,
 								key_email: keyRandom(12), // random string
-								rool: 'user',
+								role: 'user',
 							});
 							sendEmailToConfirmEmail(user.email, user.key_email);
 							res.json({

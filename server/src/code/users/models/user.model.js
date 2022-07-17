@@ -27,7 +27,7 @@ const userModel = sequelize.define(
 		email_confirmed: {
 			type: DataTypes.BOOLEAN,
 		},
-		rool: {
+		role: {
 			type: DataTypes.TEXT, // 10 charactrs
 		},
 		gender: {

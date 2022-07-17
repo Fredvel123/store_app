@@ -40,7 +40,7 @@ export const createNewProduct = async (req, res) => {
 	const { price, title, description } = req.body;
 	const user = await UsersDB.findOne({ where: { id } });
 
-	if (user.rool === 'admin') {
+	if (user.role === 'admin') {
 		if (req.file.size < 2100000) {
 			const imageUploaded = await cloudinary.v2.uploader.upload(
 				req.file.path
@@ -129,7 +129,7 @@ export const dropProduct = async (req, res) => {
 	const product = await ProductsDB.findOne({ where: { id: id_product } });
 	const id = req.id;
 	const user = await UsersDB.findOne({ where: { id } });
-	if (user.rool === 'admin') {
+	if (user.role === 'admin') {
 		if (product) {
 			try {
 				await cloudinary.v2.uploader.destroy(product.pic_id);

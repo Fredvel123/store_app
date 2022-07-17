@@ -80,7 +80,7 @@ export const removeUser = async (req, res) => {
 export const getUserRole = async (req, res) => {
 	const id = req.id;
 	const user = await UsersDB.findOne({ where: { id } });
-	if (user.rool !== 'admin') {
+	if (user.role !== 'admin') {
 		res.json({ admin: false });
 		return;
 	}
