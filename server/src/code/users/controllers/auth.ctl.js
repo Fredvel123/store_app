@@ -78,37 +78,37 @@ export const createNewUser = async (req, res) => {
 	}
 };
 
-// Sign in
+// Sign in refactored
 export const registerUsers = async (req, res) => {
 	const { password, email } = req.body;
 	const user = await UsersDB.findOne({ where: { email } });
-	if (user) {
-		const matchPassword = await bcrypt.compare(password, user.password);
-		if (matchPassword) {
-			if (user.email_confirmed) {
-				const token = jwt.sign({ id: user.id }, JWT_KEY, {
-					expiresIn: 60 * 60 * 24 * 14,
-				});
-				res.json({
-					auth: true,
-					token,
-				});
-			} else {
-				res.json({
-					auth: false,
-					message: 'You need to confirm your email to Sign In',
-				});
-			}
-		} else {
-			res.json({
-				auth: false,
-				message: 'your password is not correct',
-			});
-		}
-	} else {
+	if (!user) {
 		res.json({
 			auth: false,
 			message: `your email, ${email} is not register`,
 		});
+		return;
 	}
+	const matchPassword = await bcrypt.compare(password, user.password);
+	if (!matchPassword) {
+		res.json({
+			auth: false,
+			message: 'your password is not correct',
+		});
+		return;
+	}
+	if (!user.email_confirmed) {
+		res.json({
+			auth: false,
+			message: 'You need to confirm your email to Sign In',
+		});
+		return;
+	}
+	const token = jwt.sign({ id: user.id }, JWT_KEY, {
+		expiresIn: 60 * 60 * 24 * 14,
+	});
+	res.json({
+		auth: true,
+		token,
+	});
 };
