@@ -26,24 +26,69 @@ import fs from 'fs-extra';
 // get all products
 export const getAllProducts = async (req, res) => {
 	const products = await ProductsDB.findAll();
-	if (products.length < 1) {
-		res.json({
-			message: 'No products added yet',
-		});
-	} else {
+	if (!products.length < 1) {
 		res.json(products);
+		return;
 	}
+	res.json({
+		message: 'No products added yet',
+	});
 };
 
+// craete products refactored
 export const createNewProduct = async (req, res) => {
 	const id = req.id;
 	const { price, title, description } = req.body;
 	const user = await UsersDB.findOne({ where: { id } });
-
-	if (user.role === 'admin') {
-		if (req.file.size < 2100000) {
+	if (user.role !== 'admin') {
+		res.json({
+			productCreated: false,
+			message:
+				"You can't create products, only admins can create products",
+		});
+		return;
+	}
+	if (req.file.size < 2100000) {
+		const imageUploaded = await cloudinary.v2.uploader.upload(
+			req.file.path
+		);
+		try {
+			const productCreated = await ProductsDB.create({
+				title,
+				description,
+				price,
+				pic: imageUploaded.secure_url,
+				pic_id: imageUploaded.public_id,
+				author: user.id,
+			});
+			res.json({ productCreated: true, data: productCreated });
+			// original image
+			fs.remove(req.file.path, (err) => {
+				if (err) res.send(err);
+				console.log(`original Image removed: ${req.file.path}`);
+			});
+		} catch (err) {
+			res.send(err);
+		}
+		return;
+	}
+	const pathImageCompressed = path.join(
+		__dirname,
+		`../compressed/${Date.now() + req.file.originalname}`
+	);
+	sharp(req.file.path)
+		.resize()
+		.jpeg({
+			quality: 90,
+			// chromaSubsampling: '4:4:4',
+		})
+		.toFile(pathImageCompressed, async (err, info) => {
+			if (err) {
+				res.send(err);
+				return;
+			}
 			const imageUploaded = await cloudinary.v2.uploader.upload(
-				req.file.path
+				pathImageCompressed
 			);
 			try {
 				const productCreated = await ProductsDB.create({
@@ -54,74 +99,26 @@ export const createNewProduct = async (req, res) => {
 					pic_id: imageUploaded.public_id,
 					author: user.id,
 				});
-				res.json({ productCreated: true, data: productCreated });
+				res.json({
+					productCreated: true,
+					data: productCreated,
+				});
+				// image compressed
+				fs.remove(pathImageCompressed, (err) => {
+					if (err) res.send(err);
+					console.log(
+						`image compressed removed: ${pathImageCompressed}`
+					);
+				});
 				// original image
 				fs.remove(req.file.path, (err) => {
 					if (err) res.send(err);
-					console.log(`original Image removed: ${req.file.path}`);
+					console.log(`original image removed: ${req.file.path} `);
 				});
 			} catch (err) {
 				res.send(err);
 			}
-		} else {
-			const pathImageCompressed = path.join(
-				__dirname,
-				`../compressed/${Date.now() + req.file.originalname}`
-			);
-			sharp(req.file.path)
-				.resize()
-				.jpeg({
-					quality: 90,
-					// chromaSubsampling: '4:4:4',
-				})
-				.toFile(pathImageCompressed, async (err, info) => {
-					if (err) {
-						res.send(err);
-					} else {
-						const imageUploaded =
-							await cloudinary.v2.uploader.upload(
-								pathImageCompressed
-							);
-						try {
-							const productCreated = await ProductsDB.create({
-								title,
-								description,
-								price,
-								pic: imageUploaded.secure_url,
-								pic_id: imageUploaded.public_id,
-								author: user.id,
-							});
-							res.json({
-								productCreated: true,
-								data: productCreated,
-							});
-							// image compressed
-							fs.remove(pathImageCompressed, (err) => {
-								if (err) res.send(err);
-								console.log(
-									`image compressed removed: ${pathImageCompressed}`
-								);
-							});
-							// original image
-							fs.remove(req.file.path, (err) => {
-								if (err) res.send(err);
-								console.log(
-									`original image removed: ${req.file.path} `
-								);
-							});
-						} catch (err) {
-							res.send(err);
-						}
-					}
-				});
-		}
-	} else {
-		res.json({
-			productCreated: false,
-			message:
-				"You can't create products, only admins can create products",
 		});
-	}
 };
 
 export const dropProduct = async (req, res) => {
