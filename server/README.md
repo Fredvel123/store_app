@@ -194,7 +194,7 @@ const getFavoriteProductsByUser = async () => {
 ## Remove Favorite products
 
 ```js
-const removeProductsByProductId = async () => {
+const removeFavoriteProductsByProductId = async () => {
 	const url = `http://localhost:8000/api/products/favorites/remove/${id_product}`;
 	const request = await fetch(url, {
 		method: 'DELETE',
@@ -206,3 +206,21 @@ const removeProductsByProductId = async () => {
 	return response;
 };
 ```
+
+## Remove products 
+
+```js
+const removeProductsByProductId = async () => {
+	const url = `http://localhost:8000/api/products/drop/${id_product}`;
+	const request = await fetch(url, {
+		method: 'DELETE',
+		headers: {
+			token: 'your token',
+		},
+	});
+	const response = await request.json();
+	return response;
+};
+```
+
+
