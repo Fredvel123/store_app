@@ -13,11 +13,11 @@ app.use(cors());
 
 // routers
 app.get('/', (req, res) =>
-	res.json({
-		message: 'server is online',
-		documentation:
-			'https://github.com/Fredvel123/store_app/tree/master/server#readme',
-	})
+  res.json({
+    message: 'server is running successfully',
+    documentation:
+      'https://github.com/Fredvel123/store_app/tree/master/server#readme',
+  })
 );
 
 // router -- users
