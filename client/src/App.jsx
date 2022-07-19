@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import SignIn from './components/SignIn';
 import Home from './components/Home';
 import DeniedHome from './components/DeniedPage';
+import MainPage from './components/MainPage';
 
 export default function App() {
 	const theme = useSelector((state) => state.theme.value);
@@ -21,6 +22,7 @@ export default function App() {
 		if (data !== null) {
 			dispatch(setTheme(data));
 		}
+		document.title = 'Store App';
 		// eslint-disable-next-line
 	}, []);
 	useEffect(() => {
@@ -42,6 +44,7 @@ export default function App() {
 	return (
 		<BrowserRouter>
 			<Routes>
+				<Route path="/" element={<MainPage />} />
 				<Route path="/signup" element={<Signup />} />
 				<Route path="/signin" element={<SignIn />} />
 				<Route
