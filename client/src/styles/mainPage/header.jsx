@@ -4,9 +4,8 @@ import { fonts } from '../tools';
 import { CloseOutlined, AlignRightOutlined } from '@ant-design/icons';
 
 export const HeaderStyled = styled.div`
-	background: ${({ color }) => color.secondary};
+	background: ${({ color }) => color.primary};
 	color: ${({ color }) => color.titles};
-	/* height: ${({ state }) => (state ? '20vh' : '100vh')}; */
 	height: 20vh;
 	width: 100%;
 	padding: 0 5%;
@@ -61,7 +60,7 @@ export const HeaderStyled = styled.div`
 			position: absolute;
 			left: 0;
 			top: 0;
-			height: 100vh;
+			height: 110vh;
 			width: 100%;
 			flex-direction: column;
 			align-items: center;
