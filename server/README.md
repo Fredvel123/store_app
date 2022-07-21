@@ -207,7 +207,7 @@ const removeFavoriteProductsByProductId = async () => {
 };
 ```
 
-## Remove products 
+## Remove products
 
 ```js
 const removeProductsByProductId = async () => {
@@ -223,4 +223,18 @@ const removeProductsByProductId = async () => {
 };
 ```
 
+## Info By Users
 
+```js
+const getUserById = async () => {
+	const url = `http://localhost:8000/api/users/singleuser`;
+	const request = await fetch(url, {
+		method: 'GET',
+		headers: {
+			token: 'your token',
+		},
+	});
+	const response = await request.json();
+	return response;
+};
+```

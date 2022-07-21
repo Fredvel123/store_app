@@ -18,7 +18,7 @@ import {
   CLOUD_SECRET_KEY,
 } from '../../../configs/var.env.js';
 // path
-import { __dirname } from '../middlewares/product.images.js';
+import {__dirname} from '../middlewares/product.images.js';
 import path from 'path';
 // fs
 import fs from 'fs-extra';
@@ -38,8 +38,8 @@ export const getAllProducts = async (req, res) => {
 // craete products refactored
 export const createNewProduct = async (req, res) => {
   const id = req.id;
-  const { price, title, description } = req.body;
-  const user = await UsersDB.findOne({ where: { id } });
+  const {price, title, description} = req.body;
+  const user = await UsersDB.findOne({where: {id}});
   if (user.role !== 'admin') {
     res.json({
       productCreated: false,
@@ -61,7 +61,7 @@ export const createNewProduct = async (req, res) => {
         pic_id: imageUploaded.public_id,
         author: user.id,
       });
-      res.json({ productCreated: true, data: productCreated });
+      res.json({productCreated: true, data: productCreated});
       // original image
       fs.remove(req.file.path, (err) => {
         if (err) res.send(err);
@@ -122,14 +122,15 @@ export const createNewProduct = async (req, res) => {
 };
 
 
+
 // dropProduct refactored
 export const dropProduct = async (req, res) => {
   // products
-  const { id_product } = req.params;
-  const product = await ProductsDB.findOne({ where: { id: id_product } });
+  const {id_product} = req.params;
+  const product = await ProductsDB.findOne({where: {id: id_product}});
   // users
   const id = req.id; // id users
-  const user = await UsersDB.findOne({ where: { id } });
+  const user = await UsersDB.findOne({where: {id}});
   if (user.role !== 'admin') {
     res.json({
       message: 'Only admins can remove products',
@@ -147,7 +148,7 @@ export const dropProduct = async (req, res) => {
     await cloudinary.v2.uploader.destroy(product.pic_id);
     console.log('image removed from cloudinary');
     try {
-      await ProductsDB.destroy({ where: { id: id_product } });
+      await ProductsDB.destroy({where: {id: id_product}});
       res.json({
         dropped: true,
         product_id: id_product,
@@ -162,12 +163,12 @@ export const dropProduct = async (req, res) => {
 
 // code to added products to favorites
 export const addFavoriteProducts = async (req, res) => {
-  const { id_product } = req.params;
+  const {id_product} = req.params;
   const id = req.id;
-  const product = await ProductsDB.findOne({ where: { id: id_product } });
-  const user = await UsersDB.findOne({ where: { id } });
+  const product = await ProductsDB.findOne({where: {id: id_product}});
+  const user = await UsersDB.findOne({where: {id}});
   const favoriteAdded = await FavoriteDB.findOne({
-    where: { author: id, product_id: id_product },
+    where: {author: id, product_id: id_product},
   });
   if (product) {
     if (!favoriteAdded) {
@@ -185,20 +186,20 @@ export const addFavoriteProducts = async (req, res) => {
       });
     }
   } else {
-    res.json({ message: `product with id: ${id_product} doesn't exists` });
+    res.json({message: `product with id: ${id_product} doesn't exists`});
   }
 };
 
 export const removeFavoriteProduct = async (req, res) => {
   const id = req.id;
-  const { id_product } = req.params;
+  const {id_product} = req.params;
   const productsByUser = await FavoriteDB.findOne({
-    where: { author: id, product_id: id_product },
+    where: {author: id, product_id: id_product},
   });
   if (productsByUser) {
     try {
       await FavoriteDB.destroy({
-        where: { author: id, product_id: id_product },
+        where: {author: id, product_id: id_product},
       });
       res.json({
         favoriteRemoved: true,
@@ -217,7 +218,7 @@ export const removeFavoriteProduct = async (req, res) => {
 export const getAllFavoriteProducts = async (req, res) => {
   const id = req.id;
   const favoriteProducts = await FavoriteDB.findAll({
-    where: { author: id },
+    where: {author: id},
   });
   if (favoriteProducts < 1) {
     res.json({
@@ -228,7 +229,7 @@ export const getAllFavoriteProducts = async (req, res) => {
     for (let i = 0; i < favoriteProducts.length; i++) {
       const element = favoriteProducts[i];
       const items = await ProductsDB.findOne({
-        where: { id: element.dataValues.product_id },
+        where: {id: element.dataValues.product_id},
       });
       products.push(items);
     }
