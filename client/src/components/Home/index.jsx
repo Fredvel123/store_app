@@ -24,14 +24,14 @@ function Home() {
 		getUserRole();
 	}, []);
 
-	// const removeToken = () => {
-	// 	dispatch(setAuth({ auth: false, token: '' }));
-	// };
+	const removeToken = () => {
+		dispatch(setAuth({ auth: false, token: '' }));
+	};
 
 	return (
 		<div>
 			{role.admin ? <h2>role: admin</h2> : <h2>roleL user</h2>}
-			{/* <button onClick={removeToken}>delete token</button> */}
+			<button onClick={removeToken}>delete token</button>
 		</div>
 	);
 }

@@ -8,9 +8,9 @@ export const ThemeButtonStyled = styled.div`
 		${({ state }) => (state ? lightTheme.third : darkTheme.third)};
 	width: 60px;
 	height: 35px;
-	display: flex;
+  display: flex;
 	justify-content: space-around;
-	align-items: center;
+  align-items: center;
 	border-radius: 25px;
 	position: relative;
 	img {
@@ -25,7 +25,7 @@ export const ThemeButtonStyled = styled.div`
 		width: 25px;
 		height: 25px;
 		background: ${({ state }) =>
-			state ? lightTheme.third : darkTheme.third};
+    state ? lightTheme.third : darkTheme.third};
 	}
 	@media screen and (max-width: 700px) {
 		border: 2px solid

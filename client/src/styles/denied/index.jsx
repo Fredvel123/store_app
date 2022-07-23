@@ -7,6 +7,9 @@ export const DeniedPageStyled = styled.div`
 	h2 {
 		color: ${({ color }) => color.titles};
 	}
+	p {
+		color: ${({ color }) => color.titles};
+	}
 	.wallpaper {
 		background: ${({ color }) => color.third};
 		display: flex;

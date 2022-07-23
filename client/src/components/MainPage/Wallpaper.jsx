@@ -4,8 +4,12 @@ import { WallpaperMainStyled } from '../../styles/mainPage/wallpaperMain';
 import { Link } from 'react-router-dom';
 // colors
 import { darkTheme, lightTheme } from '../../styles/tools';
+// redux
+import { useSelector } from 'react-redux';
 
 export default function WallpaperMain({ theme }) {
+	const auth = useSelector((state) => state.auth.value);
+
 	return (
 		<WallpaperMainStyled color={theme ? lightTheme : darkTheme}>
 			<div className="letter">
@@ -16,7 +20,11 @@ export default function WallpaperMain({ theme }) {
 				</p>
 				<div className="buttons">
 					<Link to="/products">Products</Link>
-					<Link to="signup">Sign Up</Link>
+					{auth.auth ? (
+						<Link to="profile">Profile</Link>
+					) : (
+						<Link to="signup">Sign Up</Link>
+					)}
 				</div>
 			</div>
 			<div className="wallpaper">

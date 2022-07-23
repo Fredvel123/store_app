@@ -1,15 +1,17 @@
 import { useEffect } from 'react';
-// import { getAllProducts } from './configs/endpoints';
+// react router
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Signup from './components/SignUp';
 // redux
 import { setTheme } from './redux/slices/theme';
 import { setAuth } from './redux/slices/auth';
 import { useDispatch, useSelector } from 'react-redux';
+// components
+import Signup from './components/SignUp';
 import SignIn from './components/SignIn';
 import Home from './components/Home';
 import DeniedHome from './components/DeniedPage';
 import MainPage from './components/MainPage';
+import Profile from './components/Profile';
 
 export default function App() {
 	const theme = useSelector((state) => state.theme.value);
@@ -48,8 +50,24 @@ export default function App() {
 				<Route path="/signup" element={<Signup />} />
 				<Route path="/signin" element={<SignIn />} />
 				<Route
+					path="/profile"
+					element={
+						auth.auth ? (
+							<Profile />
+						) : (
+							<DeniedHome message="You need to have an account" />
+						)
+					}
+				/>
+				<Route
 					path="/home"
-					element={auth.auth ? <Home /> : <DeniedHome />}
+					element={
+						auth.auth ? (
+							<Home />
+						) : (
+							<DeniedHome message="Because you don't have an account" />
+						)
+					}
 				/>
 			</Routes>
 		</BrowserRouter>
